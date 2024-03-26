@@ -4,46 +4,37 @@ import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { useState, useEffect } from 'react';
 
 
-const GetInfo = ({ navigation, url }) => {
+export default function GetInfo(url, apiKey, setState) {
 
+    //This fonction is made to put a json as the response state
     function handleData(json) {
-        var result = [];
+        var resp = [];
 
 
         for (var i in json) {
 
-            result.push(json[i]);
+            resp.push(json[i]);
         }
-        console.log("AAAAAAAA");
-        setResponse(result);
+
+        return(resp);
 
     }
 
-    useEffect(() => {
-        fetch(url, {
+    fetch(url, {
 
-            //An API key is required
-            headers: {
-                'X-API-Key': 'V8cANfk+Xn2/4J17C3dJNw==JmYixHZ3jBoUBZth'
+        //An API key is required
+        headers: {
+            'X-API-Key': apiKey
+        }
+
+    })
+        .then(res => res.json())
+
+        .then(
+            (result) => {
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                return(handleData(result));
             }
+        )
+}
 
-        })
-            .then(res => res.json())
-
-            .then(
-                (result) => {
-                    setIsLoading(false);
-                    handleData(result);
-                },
-                (error) => {
-                    setIsLoading(false);
-                    setError(error);
-                }
-            )
-
-    }, [type,muscle,difficulty]);
-    
-
-};
-
-export default GetInfo;

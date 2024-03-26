@@ -1,4 +1,4 @@
-import { Text, TextInput, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import { Text, ScrollView, TextInput, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
 import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { useState, useEffect } from 'react';
@@ -18,11 +18,12 @@ const ProgramSport = ({ navigation }) => {
     const muscleList = ["abdominals", "abductors", "adductors", "biceps", "calves", "chest", "forearms", "glutes", "hamstrings", "lats", "lower_back", "middle_back", "neck", "quadriceps", "traps", "triceps"];
     const difficultyList = ["beginner", "intermediate", "expert"];
 
-    const url = "https://api.api-ninjas.com/v1/exercises?";
+    const url = "https://api.api-ninjas.com/v1/exercises?type=" + type + "&muscle=" + muscle + "&difficulty=" + difficulty;
+    const apiKey = 'V8cANfk+Xn2/4J17C3dJNw==JmYixHZ3jBoUBZth';
 
     // Function that take a json file (response from an api for example) and set it as the response state
 
-
+    // This function is used to handle each type of research parameters for the exercice api
     const handleState = (key, value) => {
         switch (key) {
             case 'type':
@@ -39,7 +40,7 @@ const ProgramSport = ({ navigation }) => {
         }
     }
 
-
+    //This fonction is made to put a json as the response state
     function handleData(json) {
         var result = [];
 
@@ -48,17 +49,17 @@ const ProgramSport = ({ navigation }) => {
 
             result.push(json[i]);
         }
-        console.log("AAAAAAAA");
+
         setResponse(result);
 
     }
 
     useEffect(() => {
-        fetch("https://api.api-ninjas.com/v1/exercises?type=" + type + "&muscle=" + muscle + "&difficulty=" + difficulty, {
+        fetch(url, {
 
             //An API key is required
             headers: {
-                'X-API-Key': 'V8cANfk+Xn2/4J17C3dJNw==JmYixHZ3jBoUBZth'
+                'X-API-Key': apiKey
             }
 
         })
@@ -78,6 +79,7 @@ const ProgramSport = ({ navigation }) => {
     }, [type, muscle, difficulty]);
 
 
+
     function GetContent() {
         if (isLoading) {
             return <ActivityIndicator size="large" />;
@@ -88,11 +90,11 @@ const ProgramSport = ({ navigation }) => {
         }
 
 
-        return response.map((ex, index) => <Button key={index} title={ex.name} onPress={() => navigation.navigate('exercice',{exData: ex})}></Button>);
+        return response.map((ex, index) => <Button key={index} title={ex.name} onPress={() => navigation.navigate('exercice', { exData: ex })}></Button>);
     };
-
+    const testaf=["alo","hola"]
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Search an exercice :</Text>
             {/* <TextInput
                 style={styles.input}
@@ -103,15 +105,20 @@ const ProgramSport = ({ navigation }) => {
             />
 
             <Text>{exercise}</Text> */}
-
+            <Button title='allo' onPress={() => SaveProgram('ayo',testaf)} />
             <Dropdown someList={typeList} handleState={(value) => handleState('type', value)} />
             <Dropdown someList={muscleList} handleState={(value) => handleState('muscle', value)} />
             <Dropdown someList={difficultyList} handleState={(value) => handleState('difficulty', value)} />
-            {/* <Text>{type}&{muscle}&{difficulty}</Text> */}
+
 
             <GetContent />
-        </View>
+        </ScrollView>
     );
+
+    function SaveProgram(name,[listEx]) {
+        console.log(name);
+        console.log(listEx[2]);
+    }
 
 };
 

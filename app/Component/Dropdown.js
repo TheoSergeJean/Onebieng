@@ -9,7 +9,7 @@ const Dropdown = ({ someList, handleState }) => {
         value: null,
     };
 
-    // Transformation de someList en un tableau d'options approprié
+    
     const options = someList.map(item => ({
         label: item,
         value: item,
@@ -23,6 +23,7 @@ const Dropdown = ({ someList, handleState }) => {
                 items={options}
                 onValueChange={(value) => { setSelectedValue(value); handleState(value); }}
                 value={selectedValue}
+                
             />
             {selectedValue && <Text>Selected: {selectedValue}</Text>}
         </View>

@@ -15,7 +15,7 @@ export default function Login() {
         setLoading(true);
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
-            console.log(response);
+            //console.log(response);
             alert('Check your emails!');
         } catch (error) {
             console.log(error);
@@ -29,7 +29,7 @@ export default function Login() {
         setLoading(true);
         try {
             const response = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(response);
+            //console.log(response);
             alert('Check your emails!');
         } catch (error) {
             console.log(error);
