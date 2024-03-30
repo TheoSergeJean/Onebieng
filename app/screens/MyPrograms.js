@@ -3,19 +3,14 @@ import React from 'react';
 import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 
-const Program = ([]) => {
-
-    const { exData } = route.params;
+const MyPrograms = (route) => {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Name : {exData.name}</Text>
-            <Text>Type : {exData.type}</Text>
-            <Text>Muscle : {exData.muscle}</Text>
-            <Text>Details : {exData.instructions}</Text>
+            <Text>Name : Prog number 1</Text>
         </View>
     );
 
 };
 
-export default Program;
+export default MyPrograms;

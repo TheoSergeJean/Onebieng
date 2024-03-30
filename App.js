@@ -10,6 +10,7 @@ import { FIREBASE_AUTH } from './FirebaseConfig';
 import { Text, TextInput, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
 import Nutrition from './app/screens/Nutrition';
 import Food from './app/screens/Food';
+import MyPrograms from './app/screens/MyPrograms';
 
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +27,8 @@ function InsideLayout() {
       <InsideStack.Screen name="Program" component={ProgramSport} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
       <InsideStack.Screen name="exercice" component={Exercice} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
       <InsideStack.Screen name="food" component={Food} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
+      <InsideStack.Screen name="MyPrograms" component={MyPrograms} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
+
     </InsideStack.Navigator>
   )
 }

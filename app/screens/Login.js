@@ -16,7 +16,7 @@ export default function Login() {
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
             //console.log(response);
-            alert('Check your emails!');
+            // alert('Check your emails!');
         } catch (error) {
             console.log(error);
             alert('Sign in failed : ' + error.message);

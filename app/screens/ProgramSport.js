@@ -3,6 +3,8 @@ import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { useState, useEffect } from 'react';
 import Dropdown from '../Component/Dropdown';
+import { AddProgramToDatabase } from '../Service/FirebaseService'
+
 
 
 const ProgramSport = ({ navigation }) => {
@@ -12,6 +14,8 @@ const ProgramSport = ({ navigation }) => {
     const [type, setType] = useState("");
     const [muscle, setMuscle] = useState("");
     const [difficulty, setDifficulty] = useState("");
+    const [exercises, setExercises] = useState([]);
+    const [nameProgram, setNameProgram] = useState("");
 
 
     const typeList = ["cardio", "olympic_weightlifting", "plyometrics", "powerlifting", "strength", "stretching", "strongman"];
@@ -76,7 +80,7 @@ const ProgramSport = ({ navigation }) => {
                 }
             )
 
-    }, [type, muscle, difficulty]);
+    }, [type, muscle, difficulty, exercises]);
 
 
 
@@ -90,35 +94,75 @@ const ProgramSport = ({ navigation }) => {
         }
 
 
-        return response.map((ex, index) => <Button key={index} title={ex.name} onPress={() => navigation.navigate('exercice', { exData: ex })}></Button>);
+        return response.map((ex, index) => <Button key={index} title={ex.name} onPress={() => CheckExercise(ex)}></Button>);
     };
-    const testaf=["alo","hola"]
+
+    function CheckExercise(exo) {
+        navigation.navigate('exercice', {
+            exData: exo,
+            onGoBack: (data) => {
+                AddNewExercise(data)
+            }
+        })
+    }
+
+    function handleNameProgram(inputText) {
+        setNameProgram(inputText);
+    }
+
+    function AddNewExercise(data) {
+        setExercises(oldArray => [...oldArray, data]);
+    }
+
+    function SaveProgram() {
+        if (nameProgram != "") {
+            nameObj = new Object();
+            nameObj.name = nameProgram
+            exercises.unshift(nameObj)
+            if (AddProgramToDatabase(exercises, FIREBASE_AUTH.currentUser.uid)) {
+                setExercises([])
+            }
+            navigation.navigate('MyPrograms')
+        }
+
+    }
+
+
+
+    const testaf = ["alo", "hola"]
     return (
-        <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Search an exercice :</Text>
-            {/* <TextInput
-                style={styles.input}
-                onChangeText={e => setExercise(e)}
-                placeholder="Select an exercise"
-                defaultValue={exercise}
+        <>
+            <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Search an exercice :</Text>
+                <Dropdown someList={typeList} handleState={(value) => handleState('type', value)} />
+                <Dropdown someList={muscleList} handleState={(value) => handleState('muscle', value)} />
+                <Dropdown someList={difficultyList} handleState={(value) => handleState('difficulty', value)} />
 
-            />
+                <GetContent />
 
-            <Text>{exercise}</Text> */}
-            <Button title='allo' onPress={() => SaveProgram('ayo',testaf)} />
-            <Dropdown someList={typeList} handleState={(value) => handleState('type', value)} />
-            <Dropdown someList={muscleList} handleState={(value) => handleState('muscle', value)} />
-            <Dropdown someList={difficultyList} handleState={(value) => handleState('difficulty', value)} />
+                <Text>-----------------</Text>
+                <TextInput
+                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    onChangeText={handleNameProgram}
+                    value={nameProgram}
+                    placeholder="Enter the name..."
+                />
+                <Text>Selected exercises :</Text>
+                {
+                    exercises?.map((exercise) => (
+                        <Text>{exercise?.name}</Text>
+                    ))
+                }
 
 
-            <GetContent />
-        </ScrollView>
+                <Button color={"red"} title='Save program' onPress={() => SaveProgram()} />
+
+            </ScrollView>
+
+        </>
     );
 
-    function SaveProgram(name,[listEx]) {
-        console.log(name);
-        console.log(listEx[2]);
-    }
+
 
 };
 
