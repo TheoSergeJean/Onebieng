@@ -16,7 +16,7 @@ export default function GetInfo(url, apiKey, setState) {
             resp.push(json[i]);
         }
 
-        return(resp);
+        return (resp);
 
     }
 
@@ -32,8 +32,7 @@ export default function GetInfo(url, apiKey, setState) {
 
         .then(
             (result) => {
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                return(handleData(result));
+                return (handleData(result));
             }
         )
 }

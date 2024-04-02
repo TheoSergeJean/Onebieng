@@ -1,4 +1,4 @@
-import { Text, TextInput, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import { Text, TextInput, View, StyleSheet, ActivityIndicator, Button, Image, KeyboardAvoidingView } from 'react-native';
 import React, { useState } from 'react';
 import { FIREBASE_APP, FIREBASE_AUTH } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -9,14 +9,13 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [isUser, setIsUser] = useState(true);
     const auth = FIREBASE_AUTH;
 
     const signIn = async () => {
         setLoading(true);
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
-            //console.log(response);
-            // alert('Check your emails!');
         } catch (error) {
             console.log(error);
             alert('Sign in failed : ' + error.message);
@@ -39,26 +38,59 @@ export default function Login() {
         }
     }
 
+    function changeIsUserState() {
+        setIsUser(!isUser)
+    }
+
     return (
-        <View style={styles.container}>
-            <TextInput value={email} style={styles.input} placeholder="Email" autoCapitalize="none" onChangeText={(text) => setEmail(text)}></TextInput>
-            <TextInput secureTextEntry={true} value={password} style={styles.input} placeholder="Password" autoCapitalize="none" onChangeText={(text) => setPassword(text)}></TextInput>
+        <KeyboardAvoidingView behavior="height">
+            <View style={styles.containerApp}>
+                <Image style={styles.logo} source={require('../../assets/sport.png')} ></Image>
+                <Text style={styles.appTitle}>OnéBieng</Text>
+                <Text style={styles.subAppTitle}>Sport and nutrition application</Text>
 
-            {loading ? <ActivityIndicator size="large" color="#0000ff" />
-                : <>
-                    <Button title="Login" onPress={signIn} />
-                    <Button title="Create account" onPress={signUp} />
-                </>}
-        </View>
+            </View >
+            <View style={styles.container}>
 
+                {
+                    isUser && <Text style={styles.title}>Log In page</Text>
+                }
+                {
+                    !isUser && <Text style={styles.title}>Sign Up page</Text>
+                }
+                <TextInput value={email} style={styles.input} placeholder="Email" autoCapitalize="none" onChangeText={(text) => setEmail(text)}></TextInput>
+                <TextInput secureTextEntry={true} value={password} style={styles.input} placeholder="Password" autoCapitalize="none" onChangeText={(text) => setPassword(text)}></TextInput>
+
+                {loading ? <ActivityIndicator size="large" color="#0000ff" />
+                    : <>
+                        {
+                            isUser && <Text style={styles.button} title="Login" onPress={signIn} >Login</Text>
+                        }
+                        {
+                            !isUser && <Text style={styles.button} title="Create account" onPress={signUp} >Create account</Text>
+                        }
+                        {
+                            isUser && <Text style={styles.subText} onPress={() => { changeIsUserState() }}>Don't have an account yet ? click here ! </Text>
+                        }
+                        {
+                            !isUser && <Text style={styles.subText} onPress={() => { changeIsUserState() }} >Already have an account ? click here !</Text>
+                        }
+                    </>}
+            </View>
+        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
+    containerApp: {
+        marginTop: 60,
+        justifyContent: 'center',
+        marginBottom: -200,
+    },
     container: {
         marginHorizontal: 20,
-        flex: 1,
-        justifyContent: 'center'
+        marginTop: 250,
+        justifyContent: 'center',
     },
     input: {
         marginVertical: 4,
@@ -68,5 +100,46 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#fff',
 
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        textAlign: 'center'
+    },
+    appTitle: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginBottom: 2,
+        textAlign: 'center'
+    }
+    ,
+    subAppTitle: {
+        fontSize: 24,
+        marginBottom: 20,
+        textAlign: 'center'
+    },
+    subText: {
+        color: 'blue',
+        marginTop: 15,
+        fontWeight: 'bold'
+    },
+    logo: {
+        width: 100,
+        height: 100,
+        alignSelf: 'center'
+    },
+    button: {
+        backgroundColor: '#4CAF50',
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 5,
+        width: 300,
+        alignItems: 'center',
+        color: 'white',
+        fontSize: 18,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        alignSelf: 'center'
     }
 });

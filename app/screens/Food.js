@@ -47,10 +47,13 @@ const Food = ({ route }) => {
 
     return (
 
-        <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ScrollView contentContainerStyle={{
+            flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20, marginBottom: 20
+
+        }}>
             {response && response.name && response.nutrition && response.nutrition.nutrients && (
                 <View>
-                    <Text>Name : {response.name}</Text>
+                    <Text style={styles.title}>Name : {response.name}</Text>
                     <ScrollView style={styles.container}>
                         {response.nutrition.nutrients.map((nutrient, index) => (
                             <View key={index} style={styles.nutrientContainer}>
@@ -60,11 +63,11 @@ const Food = ({ route }) => {
                             </View>
                         ))}
                     </ScrollView>
-                    <Button title='log' onPress={() => console.log(response.name)} />
                 </View>
-            )}
+            )
+            }
 
-        </ScrollView>
+        </ScrollView >
     );
 
 };
@@ -86,6 +89,13 @@ const styles = StyleSheet.create({
     amount: {},
     percent: {
         color: 'green',
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: 5,
+        marginBottom: 8,
+        alignSelf: 'center'
     },
 });
 

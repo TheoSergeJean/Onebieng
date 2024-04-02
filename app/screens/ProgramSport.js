@@ -93,8 +93,8 @@ const ProgramSport = ({ navigation }) => {
             return <Text>{error}</Text>;
         }
 
-
-        return response.map((ex, index) => <Button key={index} title={ex.name} onPress={() => CheckExercise(ex)}></Button>);
+        return response.map((ex, index) => <Text style={styles.button} key={index} title={ex.name} onPress={() => CheckExercise(ex)}>{ex.name}</Text >);
+        //return (<ScrollView contentContainerStyle={{ height: '80%' }}> {response.map((ex, index) => { <Text style={styles.button} key={index} title={ex.name} onPress={() => CheckExercise(ex)}>{ex.name}</Text> })}</ScrollView>);
     };
 
     function CheckExercise(exo) {
@@ -122,7 +122,7 @@ const ProgramSport = ({ navigation }) => {
             if (AddProgramToDatabase(exercises, FIREBASE_AUTH.currentUser.uid)) {
                 setExercises([])
             }
-            navigation.navigate('MyPrograms')
+            navigation.navigate('My Programs')
         }
 
     }
@@ -132,30 +132,39 @@ const ProgramSport = ({ navigation }) => {
     const testaf = ["alo", "hola"]
     return (
         <>
-            <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Search an exercice :</Text>
-                <Dropdown someList={typeList} handleState={(value) => handleState('type', value)} />
-                <Dropdown someList={muscleList} handleState={(value) => handleState('muscle', value)} />
-                <Dropdown someList={difficultyList} handleState={(value) => handleState('difficulty', value)} />
+            <ScrollView contentContainerStyle={{ paddingRight: 25, paddingLeft: 25 }}>
 
-                <GetContent />
+                <ScrollView contentContainerStyle={{ height: '100%' }}>
+                    <Text style={styles.title}>Search an exercice :</Text>
+                    <Text style={styles.subTitle}>Type of exercise :</Text>
+                    <Dropdown someList={typeList} handleState={(value) => handleState('type', value)} />
+                    <Text style={styles.subTitle}>Body part :</Text>
+                    <Dropdown someList={muscleList} handleState={(value) => handleState('muscle', value)} />
+                    <Text style={styles.subTitle}>Sport level:</Text>
+                    <Dropdown someList={difficultyList} handleState={(value) => handleState('difficulty', value)} />
+                    <Text style={styles.subTitle}>List of exercises :</Text>
+                    <GetContent />
+                </ScrollView>
+                <View style={styles.separator} />
+                <View contentContainerStyle={{ height: '100%' }}>
+                    <Text style={styles.title}>Program :</Text>
+                    <Text style={styles.subTitle}>Name of the program :</Text>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={handleNameProgram}
+                        value={nameProgram}
+                        placeholder="Enter the name..."
+                    />
+                    <Text style={styles.subTitle}>Selected exercises :</Text>
+                    {
+                        exercises?.map((exercise) => (
+                            <Text style={{ alignSelf: 'center' }}>{exercise?.name}</Text>
+                        ))
+                    }
 
-                <Text>-----------------</Text>
-                <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={handleNameProgram}
-                    value={nameProgram}
-                    placeholder="Enter the name..."
-                />
-                <Text>Selected exercises :</Text>
-                {
-                    exercises?.map((exercise) => (
-                        <Text>{exercise?.name}</Text>
-                    ))
-                }
 
-
-                <Button color={"red"} title='Save program' onPress={() => SaveProgram()} />
+                    <Text style={[styles.button, { backgroundColor: "red", marginTop: 20, marginBottom: 40 }]} title='Save program' onPress={() => SaveProgram()} >Save program</Text>
+                </View>
 
             </ScrollView>
 
@@ -177,4 +186,49 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
     },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: 5,
+        marginBottom: 8
+    },
+    button: {
+        backgroundColor: '#4CAF50',
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 10,
+        width: 300,
+        alignItems: 'center',
+        color: 'white',
+        fontSize: 18,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        alignSelf: 'center'
+    },
+    separator: {
+        borderBottomColor: '#ccc',
+        borderBottomWidth: 1,
+        width: '80%',
+        marginBottom: 20,
+        marginTop: 20,
+        alignSelf: 'center'
+    },
+    subTitle: {
+        fontSize: 15,
+        alignSelf: 'center',
+        marginBottom: 15,
+        marginTop: 10,
+        fontWeight: 'bold',
+    },
+    input:
+    {
+        height: 40,
+        width: '50 %',
+        borderColor: 'gray',
+        borderWidth: 1,
+        alignSelf: 'center',
+        borderColor: '#ccc',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+    }
 });

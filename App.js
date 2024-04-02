@@ -11,6 +11,7 @@ import { Text, TextInput, View, StyleSheet, ActivityIndicator, Button } from 're
 import Nutrition from './app/screens/Nutrition';
 import Food from './app/screens/Food';
 import MyPrograms from './app/screens/MyPrograms';
+import Program from './app/screens/Program';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,10 +25,11 @@ function InsideLayout() {
     <InsideStack.Navigator>
       <InsideStack.Screen name="Home" component={Home} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
       <InsideStack.Screen name="Nutrition" component={Nutrition} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
-      <InsideStack.Screen name="Program" component={ProgramSport} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
+      <InsideStack.Screen name="New Program" component={ProgramSport} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
       <InsideStack.Screen name="exercice" component={Exercice} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
       <InsideStack.Screen name="food" component={Food} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
-      <InsideStack.Screen name="MyPrograms" component={MyPrograms} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
+      <InsideStack.Screen name="My Programs" component={MyPrograms} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
+      <InsideStack.Screen name="Program" component={Program} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
 
     </InsideStack.Navigator>
   )

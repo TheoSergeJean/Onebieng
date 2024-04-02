@@ -72,7 +72,7 @@ const Nutrition = ({ navigation }) => {
         }
 
 
-        return response[0].map((pd, index) => <Button key={index} title={pd.name} onPress={() => navigation.navigate('food', { pdData: pd })}></Button>);
+        return response[0].map((pd, index) => <Text style={styles.button} key={index} title={pd.name} onPress={() => navigation.navigate('food', { pdData: pd })}>{pd.name}</Text>);
 
     };
 
@@ -111,72 +111,89 @@ const Nutrition = ({ navigation }) => {
     }
 
     return (<ScrollView>
-        <View>
-            <TextInput
-                placeholder="Enter your age"
-                onChangeText={text => setAgeTemp(text)}
-                keyboardType="numeric"
-            />
-            <TextInput
-                placeholder="Enter your height (cm)"
-                onChangeText={text => setHeightTemp(text)}
-                keyboardType="numeric"
-            />
-            <TextInput
-                placeholder="Enter your weight (kg)"
-                onChangeText={text => setWeightTemp(text)}
-                keyboardType="numeric"
-            />
-            <Text>Select a sex:</Text>
-            <RNPickerSelect
-                placeholder={"Sex"}
-                items={[
-                    { label: 'Male', value: 'male' },
-                    { label: 'Female', value: 'female' }
-                ]}
-                onValueChange={(value) => setSexTemp(value)}
+        <View style={{ marginTop: 20, textAlign: 'center', alignItems: 'center' }}>
+            <Text style={styles.title}>Enter information</Text>
+            <Text style={styles.subTitle}>Age :</Text>
+            <View style={styles.drop}>
+                <TextInput
+                    placeholder="Enter your age"
+                    onChangeText={text => setAgeTemp(text)}
+                    keyboardType="numeric"
+                />
+            </View>
+            <Text style={styles.subTitle}>Height :</Text>
+            <View style={styles.drop}>
+                <TextInput
+                    placeholder="Enter your height (cm)"
+                    onChangeText={text => setHeightTemp(text)}
+                    keyboardType="numeric"
+                />
+            </View>
+            <Text style={styles.subTitle}>Weight :</Text>
+            <View style={styles.drop}>
+                <TextInput
+                    placeholder="Enter your weight (kg)"
+                    onChangeText={text => setWeightTemp(text)}
+                    keyboardType="numeric"
+                />
+            </View>
+            <Text style={styles.subTitle}>Sex :</Text>
+            <View style={styles.drop}>
+                <Text>Select a sex:</Text>
+                <RNPickerSelect
+                    placeholder={"Sex"}
+                    items={[
+                        { label: 'Male', value: 'male' },
+                        { label: 'Female', value: 'female' }
+                    ]}
+                    onValueChange={(value) => setSexTemp(value)}
 
 
-            />
-            <Text>Select an activity level:</Text>
-            <RNPickerSelect
-                placeholder={"Activity level"}
-                items={[
-                    { label: 'Sedentary', value: 'sedentary' },
-                    { label: 'Lightly Active', value: 'lightly active' },
-                    { label: 'Moderately Active', value: 'moderately active' },
-                    { label: 'Very Active', value: 'very active' },
-                    { label: 'Extra Active', value: 'extra active' }
-                ]}
-                onValueChange={(value) => setActivityLevelTemp(value)}
+                />
+            </View>
+            <Text style={styles.subTitle}>Activity level :</Text>
+            <View style={styles.drop}>
+                <Text>Select an activity level:</Text>
+                <RNPickerSelect
+                    placeholder={"Activity level"}
+                    items={[
+                        { label: 'Sedentary', value: 'sedentary' },
+                        { label: 'Lightly Active', value: 'lightly active' },
+                        { label: 'Moderately Active', value: 'moderately active' },
+                        { label: 'Very Active', value: 'very active' },
+                        { label: 'Extra Active', value: 'extra active' }
+                    ]}
+                    onValueChange={(value) => setActivityLevelTemp(value)}
 
 
-            />
-            <Button title='Calculate macros' onPress={() => {
+                />
+            </View>
+            <Text style={[styles.button, { backgroundColor: "red", marginTop: 20 }]} title='Calculate macros' onPress={() => {
                 setActivityLevel(activityLevelTemp);
                 setSex(sexTemp);
                 setAge(ageTemp);
                 setWeight(weightTemp);
                 setHeight(heightTemp);
-            }} />
+            }} >Calculate macros</Text>
             <Text>Your macros needs :{dailyCaloricNeeds(age, height, weight, sex, activityLevel)} cal</Text>
         </View>
-
+        <View style={styles.separator} />
+        <Text style={styles.title}>Search an ingredient : </Text>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <TextInput placeholder='Name of your product' onChangeText={(text) => {
+            <TextInput style={styles.input} placeholder='Name of your product' onChangeText={(text) => {
                 setIntermediate(text);
 
             }} />
-            <Button title='Search' onPress={() => {
+            <Text style={[styles.button, { backgroundColor: "red", marginTop: 20 }]} title='Search' onPress={() => {
                 setProduct(intermediate);
 
-            }} />
-            <View><Text>Ingrédients correspondants :</Text></View>
+            }} >Search</Text>
+            <View><Text style={{ marginBottom: 20, marginTop: 20 }}>Matching ingredients :</Text></View>
 
             <GetContent />
 
         </View>
-    </ScrollView>
+    </ScrollView >
     );
 
 };
@@ -184,3 +201,66 @@ const Nutrition = ({ navigation }) => {
 export default Nutrition;
 
 
+const styles = StyleSheet.create({
+    drop: {
+        fontSize: 16,
+        paddingHorizontal: 8,
+        paddingVertical: 5,
+        borderWidth: 0.5,
+        borderColor: 'gray',
+        borderRadius: 8,
+        color: 'black',
+        width: '80%',
+        marginBottom: 10,
+        alignSelf: 'center'
+    },
+    button: {
+        backgroundColor: '#4CAF50',
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 10,
+        width: 200,
+        alignItems: 'center',
+        color: 'white',
+        fontSize: 18,
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    subTitle: {
+        alignSelf: 'flex-start',
+        marginBottom: 15,
+        marginTop: 10,
+        fontWeight: 'bold',
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginLeft: 45
+    },
+    title: {
+        alignSelf: 'center',
+        marginBottom: 15,
+        marginTop: 10,
+        fontWeight: 'bold',
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    separator: {
+        borderBottomColor: '#ccc',
+        borderBottomWidth: 1,
+        width: '80%',
+        marginBottom: 10,
+        marginTop: 10,
+        alignSelf: 'center'
+    },
+    input:
+    {
+        height: 40,
+        width: '50 %',
+        borderColor: 'gray',
+        borderWidth: 1,
+        alignSelf: 'center',
+        borderColor: '#ccc',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        marginBottom: 10
+    }
+});
