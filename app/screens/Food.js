@@ -9,7 +9,7 @@ const Food = ({ route }) => {
     const { pdData } = route.params;
     const [response, setResponse] = useState();
 
-    const apiKey = '4d2a59e1f761497d89010365e17d2084'; //Put your API Key here
+    const apiKey = ''; //Put your API Key here
 
     // Contain the fetch function to call an api
     useEffect(() => {

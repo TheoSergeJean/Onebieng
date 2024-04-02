@@ -24,7 +24,7 @@ const ProgramSport = ({ navigation }) => {
 
     const url = "https://api.api-ninjas.com/v1/exercises?type=" + type + "&muscle=" + muscle + "&difficulty=" + difficulty;
 
-    const apiKey = 'V8cANfk+Xn2/4J17C3dJNw==JmYixHZ3jBoUBZth'; //Put your API Key here
+    const apiKey = ''; //Put your API Key here
 
     // Function that take a json file (response from an api for example) and set it as the response state
 

@@ -25,7 +25,7 @@ const Nutrition = ({ navigation }) => {
     const [sexTemp, setSexTemp] = useState("");
     const [activityLevelTemp, setActivityLevelTemp] = useState("");
 
-    const apiKey = '4d2a59e1f761497d89010365e17d2084'; //Put your API Key here
+    const apiKey = ''; //Put your API Key here
 
     //Push diffrent JSON parts into an array to be used as an array
     function handleData(json) {
