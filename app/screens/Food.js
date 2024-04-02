@@ -13,7 +13,7 @@ const Food = ({ route }) => {
 
     // Contain the fetch function to call an api
     useEffect(() => {
-        fetch("https://api.spoonacular.com/food/ingredients/" + pdData.id + "/information?amount=100", {
+        fetch("https://api.spoonacular.com/food/ingredients/" + pdData.id + "/information?amount=1", {
 
             //An API key is required
             headers: {
