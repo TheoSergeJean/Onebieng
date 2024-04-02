@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Dropdown from '../Component/Dropdown';
 import { AddProgramToDatabase } from '../Service/FirebaseService'
 
-// Main sport page where you can create programs, select params for exercices and navigate to exercices details.
+// Main sport page where you can create programs, select params for exercises and navigate to exercises details.
 
 const ProgramSport = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +28,7 @@ const ProgramSport = ({ navigation }) => {
 
     // Function that take a json file (response from an api for example) and set it as the response state
 
-    // This function is used to handle each type of research parameters for the exercice api
+    // This function is used to handle each type of research parameters for the exercise api
     const handleState = (key, value) => {
         switch (key) {
             case 'type':
@@ -85,7 +85,7 @@ const ProgramSport = ({ navigation }) => {
     }, [type, muscle, difficulty, exercises]);
 
 
-    //Allow to display a list of button leading to exercices details
+    //Allow to display a list of button leading to exercises details
     function GetContent() {
         if (isLoading) {
             return <ActivityIndicator size="large" />;
@@ -99,9 +99,9 @@ const ProgramSport = ({ navigation }) => {
     };
 
 
-    // Allow to navigate to an exercice page, and wait for information from the targeted page
+    // Allow to navigate to an exercise page, and wait for information from the targeted page
     function CheckExercise(exo) {
-        navigation.navigate('exercice', {
+        navigation.navigate('Exercise', {
             exData: exo,
             onGoBack: (data) => {
                 AddNewExercise(data)
@@ -113,7 +113,7 @@ const ProgramSport = ({ navigation }) => {
     function handleNameProgram(inputText) {
         setNameProgram(inputText);
     }
-    //Add an exercice to the future program
+    //Add an exercise to the future program
     function AddNewExercise(data) {
         setExercises(oldArray => [...oldArray, data]);
     }
@@ -137,7 +137,7 @@ const ProgramSport = ({ navigation }) => {
             <ScrollView contentContainerStyle={{ paddingRight: 25, paddingLeft: 25 }}>
 
                 <ScrollView contentContainerStyle={{ height: '100%' }}>
-                    <Text style={styles.title}>Search an exercice :</Text>
+                    <Text style={styles.title}>Search an exercise :</Text>
                     <Text style={styles.subTitle}>Type of exercise :</Text>
                     <Dropdown someList={typeList} handleState={(value) => handleState('type', value)} />
                     <Text style={styles.subTitle}>Body part :</Text>

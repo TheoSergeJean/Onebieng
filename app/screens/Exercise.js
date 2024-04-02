@@ -3,9 +3,9 @@ import React from 'react';
 import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 
-//A page where an exercice's details are shown
+//A page where an exercise's details are shown
 
-const Exercice = ({ route, navigation }) => {
+const Exercise = ({ route, navigation }) => {
 
     //Allow to send back data to the previous page through the route
     function AddToProgram(exData) {
@@ -27,7 +27,7 @@ const Exercice = ({ route, navigation }) => {
 
 };
 
-export default Exercice;
+export default Exercise;
 
 const styles = StyleSheet.create({
     button: {

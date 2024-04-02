@@ -76,7 +76,7 @@ const Nutrition = ({ navigation }) => {
         }
 
 
-        return response[0].map((pd, index) => <Text style={styles.button} key={index} title={pd.name} onPress={() => navigation.navigate('food', { pdData: pd })}>{pd.name}</Text>);
+        return response[0].map((pd, index) => <Text style={styles.button} key={index} title={pd.name} onPress={() => navigation.navigate('Food', { pdData: pd })}>{pd.name}</Text>);
 
     };
     //The daily Caloric needs calculator

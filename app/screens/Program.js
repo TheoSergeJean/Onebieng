@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 
-//Page where you can see a program with his name and exercices.
+//Page where you can see a program with his name and exercises.
 
 const Program = ({ route, navigation }) => {
     const [name, setName] = useState("");
     const [exercises, setExercises] = useState([]);
     const { programData } = route.params;
 
-    //The use effect separate the name form the exercices in the answer given by programData
+    //The use effect separate the name form the exercises in the answer given by programData
 
     useEffect(() => {
         setName(programData[0].name);
@@ -24,7 +24,7 @@ const Program = ({ route, navigation }) => {
             <Text style={styles.title}>My program name : {name}</Text>
             <Text style={styles.title}>List of exercises:</Text>
             <ScrollView>{
-                exercises.map((ex, index) => <Text style={styles.button} key={index} title={ex.name} onPress={() => navigation.navigate('exercice', { exData: ex })
+                exercises.map((ex, index) => <Text style={styles.button} key={index} title={ex.name} onPress={() => navigation.navigate('Exercise', { exData: ex })
                 } >{ex.name}</Text>)
             }
             </ScrollView>
