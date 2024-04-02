@@ -3,6 +3,8 @@ import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { useState, useEffect } from 'react';
 
+//The home page, a hub to access the other pages
+
 const Home = ({ navigation }) => {
 
     const [username, setUsername] = useState("user");
@@ -11,6 +13,7 @@ const Home = ({ navigation }) => {
         handleUsername()
     }, []);
 
+    // Display the first part of an email adress as a username
     function handleUsername() {
         email = FIREBASE_AUTH.currentUser.email;
         setUsername(email.split('@')[0])

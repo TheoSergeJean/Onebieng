@@ -13,6 +13,7 @@ import Food from './app/screens/Food';
 import MyPrograms from './app/screens/MyPrograms';
 import Program from './app/screens/Program';
 
+//The main app file
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +41,6 @@ export default function App() {
 
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      // console.log('user', user);
       setUser(user);
     })
   }, []);

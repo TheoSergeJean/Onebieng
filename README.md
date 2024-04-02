@@ -2,9 +2,10 @@
 
 
 
+npm install
+npm install --global yarn
+yarn install
 
 
 
-
-
-npm install react-native-picker-select
+yarn add react-native-picker-select

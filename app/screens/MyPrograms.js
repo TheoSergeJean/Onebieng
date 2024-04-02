@@ -4,16 +4,15 @@ import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { GetPrograms } from "../Service/FirebaseService";
 
+//The page where a specific user's programs are displayed.
+
 const MyPrograms = ({ route, navigation }) => {
     const [programs, setPrograms] = useState([]);
-
+    //Fetch the prgrams according to the logged user id
     useEffect(() => {
         userId = FIREBASE_AUTH.currentUser.uid
         GetPrograms(userId).then((docsSnap) => {
-
             docsSnap.forEach(doc => {
-                // console.log(JSON.parse((JSON.stringify(doc.data().program))));
-                // console.log(doc.data());
                 setPrograms(oldArray => [...oldArray, doc.data().program]);
             })
         })

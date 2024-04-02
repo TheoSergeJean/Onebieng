@@ -4,6 +4,7 @@ import { FIREBASE_APP, FIREBASE_AUTH } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
+//The login Page used to either sign up or sign in
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -12,6 +13,8 @@ export default function Login() {
     const [isUser, setIsUser] = useState(true);
     const auth = FIREBASE_AUTH;
 
+
+    //Allow a user to log in the app if the mail and password are correct
     const signIn = async () => {
         setLoading(true);
         try {
@@ -23,13 +26,11 @@ export default function Login() {
             setLoading(false);
         }
     }
-
+    //Allow a user to create an account on the app
     const signUp = async () => {
         setLoading(true);
         try {
             const response = await createUserWithEmailAndPassword(auth, email, password);
-            //console.log(response);
-            alert('Check your emails!');
         } catch (error) {
             console.log(error);
             alert('Sign in failed : ' + error.message);
@@ -37,7 +38,7 @@ export default function Login() {
             setLoading(false);
         }
     }
-
+    // Change a state to dertermine whether the user want to sign up or sign in
     function changeIsUserState() {
         setIsUser(!isUser)
     }

@@ -4,13 +4,15 @@ import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import RNPickerSelect from 'react-native-picker-select';
 
+//The main page about nutrition, here you can calculate your caloric needs and search for ingredient/dishes
+
 const Nutrition = ({ navigation }) => {
     const [product, setProduct] = useState("banana");
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState();
     const [response, setResponse] = useState();
     const [intermediate, setIntermediate] = useState("");
-
+    //Variables for the daily needs calculator
     const [age, setAge] = useState();
     const [weight, setWeight] = useState();
     const [height, setHeight] = useState();
@@ -23,7 +25,9 @@ const Nutrition = ({ navigation }) => {
     const [sexTemp, setSexTemp] = useState("");
     const [activityLevelTemp, setActivityLevelTemp] = useState("");
 
+    const apiKey = '4d2a59e1f761497d89010365e17d2084'; //Put your API Key here
 
+    //Push diffrent JSON parts into an array to be used as an array
     function handleData(json) {
         var result = [];
 
@@ -35,13 +39,13 @@ const Nutrition = ({ navigation }) => {
 
         setResponse(result);
     }
-
+    // Contain the fetch function to call an api
     useEffect(() => {
         fetch("https://api.spoonacular.com/food/ingredients/search?query=" + product + "&number=30&sort=calories&sortDirection=desc", {
 
             //An API key is required
             headers: {
-                'X-API-Key': '4d2a59e1f761497d89010365e17d2084'
+                'X-API-Key': apiKey
             }
 
         })
@@ -61,7 +65,7 @@ const Nutrition = ({ navigation }) => {
     }, [product]);
 
 
-
+    //Allow to display a list of button leading to food details
     function GetContent() {
         if (isLoading) {
             return <ActivityIndicator size="large" />;
@@ -75,7 +79,7 @@ const Nutrition = ({ navigation }) => {
         return response[0].map((pd, index) => <Text style={styles.button} key={index} title={pd.name} onPress={() => navigation.navigate('food', { pdData: pd })}>{pd.name}</Text>);
 
     };
-
+    //The daily Caloric needs calculator
     function dailyCaloricNeeds(age, height, weight, gender, activityLevel) {
         let caloricNeeds = 0;
 

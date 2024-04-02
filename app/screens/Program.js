@@ -3,10 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 
+//Page where you can see a program with his name and exercices.
+
 const Program = ({ route, navigation }) => {
     const [name, setName] = useState("");
     const [exercises, setExercises] = useState([]);
     const { programData } = route.params;
+
+    //The use effect separate the name form the exercices in the answer given by programData
 
     useEffect(() => {
         setName(programData[0].name);

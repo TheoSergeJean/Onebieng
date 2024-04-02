@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import { View, Text, StyleSheet } from 'react-native';
 
+//A dropdown menu used in the 
+
 const Dropdown = ({ someList, handleState }) => {
     const [selectedValue, setSelectedValue] = useState(null);
     const placeholder = {

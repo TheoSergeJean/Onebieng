@@ -3,29 +3,21 @@ import React, { useEffect, useState } from 'react';
 import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 
+// A page to display information about the food selected on the nutrition page
+
 const Food = ({ route }) => {
     const { pdData } = route.params;
     const [response, setResponse] = useState();
 
-    // function handleData(json) {
-    //     var result = [];
+    const apiKey = '4d2a59e1f761497d89010365e17d2084'; //Put your API Key here
 
-
-    //     for (var i in json) {
-
-    //         result.push(json[i]);
-    //     }
-
-    //     setResponse(result);
-    //     console.log(response);
-    // }
-
+    // Contain the fetch function to call an api
     useEffect(() => {
         fetch("https://api.spoonacular.com/food/ingredients/" + pdData.id + "/information?amount=100", {
 
             //An API key is required
             headers: {
-                'X-API-Key': '4d2a59e1f761497d89010365e17d2084'
+                'X-API-Key': apiKey
             }
 
         })
@@ -37,13 +29,7 @@ const Food = ({ route }) => {
                     setResponse(result);
                 }
             )
-
-
     }, [])
-
-
-
-
 
     return (
 

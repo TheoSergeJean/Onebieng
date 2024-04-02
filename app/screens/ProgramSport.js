@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Dropdown from '../Component/Dropdown';
 import { AddProgramToDatabase } from '../Service/FirebaseService'
 
-
+// Main sport page where you can create programs, select params for exercices and navigate to exercices details.
 
 const ProgramSport = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +23,8 @@ const ProgramSport = ({ navigation }) => {
     const difficultyList = ["beginner", "intermediate", "expert"];
 
     const url = "https://api.api-ninjas.com/v1/exercises?type=" + type + "&muscle=" + muscle + "&difficulty=" + difficulty;
-    const apiKey = 'V8cANfk+Xn2/4J17C3dJNw==JmYixHZ3jBoUBZth';
+
+    const apiKey = 'V8cANfk+Xn2/4J17C3dJNw==JmYixHZ3jBoUBZth'; //Put your API Key here
 
     // Function that take a json file (response from an api for example) and set it as the response state
 
@@ -44,7 +45,7 @@ const ProgramSport = ({ navigation }) => {
         }
     }
 
-    //This fonction is made to put a json as the response state
+    //Push diffrent JSON parts into an array to be used as an array
     function handleData(json) {
         var result = [];
 
@@ -58,6 +59,7 @@ const ProgramSport = ({ navigation }) => {
 
     }
 
+    // Contain the fetch function to call an api
     useEffect(() => {
         fetch(url, {
 
@@ -83,7 +85,7 @@ const ProgramSport = ({ navigation }) => {
     }, [type, muscle, difficulty, exercises]);
 
 
-
+    //Allow to display a list of button leading to exercices details
     function GetContent() {
         if (isLoading) {
             return <ActivityIndicator size="large" />;
@@ -94,9 +96,10 @@ const ProgramSport = ({ navigation }) => {
         }
 
         return response.map((ex, index) => <Text style={styles.button} key={index} title={ex.name} onPress={() => CheckExercise(ex)}>{ex.name}</Text >);
-        //return (<ScrollView contentContainerStyle={{ height: '80%' }}> {response.map((ex, index) => { <Text style={styles.button} key={index} title={ex.name} onPress={() => CheckExercise(ex)}>{ex.name}</Text> })}</ScrollView>);
     };
 
+
+    // Allow to navigate to an exercice page, and wait for information from the targeted page
     function CheckExercise(exo) {
         navigation.navigate('exercice', {
             exData: exo,
@@ -106,14 +109,16 @@ const ProgramSport = ({ navigation }) => {
         })
     }
 
+    //Set the name of the new program
     function handleNameProgram(inputText) {
         setNameProgram(inputText);
     }
-
+    //Add an exercice to the future program
     function AddNewExercise(data) {
         setExercises(oldArray => [...oldArray, data]);
     }
 
+    //Give all the information to the AddProgram to send the program to the database
     function SaveProgram() {
         if (nameProgram != "") {
             nameObj = new Object();
@@ -127,9 +132,6 @@ const ProgramSport = ({ navigation }) => {
 
     }
 
-
-
-    const testaf = ["alo", "hola"]
     return (
         <>
             <ScrollView contentContainerStyle={{ paddingRight: 25, paddingLeft: 25 }}>
