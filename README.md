@@ -18,17 +18,17 @@ Entrez la commande: npm install
 L'application fonctionne avec des API (application programming interface) utilisant des clés spécifiques pour les utilisateurs, vous devrez créer des comptes chez les hébergeurs de ces API afin de pouvoir bénéficier de leur clé API et ainsi l'ajouter dans le programme.
 
 API NINJA:
-Rendez vous sur le site : https://api-ninjas.com/ et créez un compte.
+Rendez-vous sur le site : https://api-ninjas.com/ et créez un compte.
 Connectez vous et vous devriez pouvoir accéder à une clé api en cliquant sur le bouton "Show API key"
-Copiez cette clé et collez la entre guillements '' à la ligne 27 du fichier ProgramSport.js (chemin : app/screens/ProgramSport.js)
+Copiez cette clé et collez la entre guillemets '' à la ligne 27 du fichier ProgramSport.js (chemin : app/screens/ProgramSport.js)
 Sauvegardez avec ctrl+S
 
 SPOONACULAR:
 Rendez vous sur le site : https://spoonacular.com/food-api et créez un compte.
 Connectez vous et vous devriez pouvoir accéder à une clé api en cliquant sur le bouton "Show/Hide API key" dans l'onglet Profile.
-Copiez cette clé et collez la entre guillements '' à la ligne 28 du fichier Nutrition.js (chemin : app/screens/Nutrition.js)
+Copiez cette clé et collez la entre guillemets '' à la ligne 28 du fichier Nutrition.js (chemin : app/screens/Nutrition.js)
 Sauvegardez avec ctrl+S
-Copiez cette clé et collez la entre guillements '' à la ligne 12 du fichier Food.js (chemin : app/screens/Food.js)
+Copiez cette clé et collez la entre guillemets '' à la ligne 12 du fichier Food.js (chemin : app/screens/Food.js)
 Sauvegardez avec ctrl+S
 
 
