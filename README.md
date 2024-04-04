@@ -14,6 +14,7 @@ Sélectionnez le dossier Onebieng dans vos dossier ou entrez la commande : cd On
 
 Entrez la commande: npm install 
 
+Entrez la commande npm install --global yarn
 
 L'application fonctionne avec des API (application programming interface) utilisant des clés spécifiques pour les utilisateurs, vous devrez créer des comptes chez les hébergeurs de ces API afin de pouvoir bénéficier de leur clé API et ainsi l'ajouter dans le programme.
 
@@ -34,6 +35,10 @@ Sauvegardez avec ctrl+S
 
 
 Entrez dans le terminal la commande : yarn expo start --tunnel     Regardez dans votre terminal, un QR code devrait apparaître dans les informations les plus récentes.
+Si un message d'erreur apparaît, votre ordinateur bloque peut être l'exécution du script, pour un ordinateur muni de windows, ouvrez windows powershell en tant qu'administrateur et exécutez la fonction : Set-ExecutionPolicy Unrestricted -Scope CurrentUser pour plus d'informations consultez la doculentation : https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4
+Une fois la commande exécutez, retournez sur vscode et retentez la commande précédente.
+
+Un message devrait vous proposer de télécharger ngrok, si c'est le cas acceptez-le.
 
 Sur votre téléphone téléchargez l'application expo go.
 
