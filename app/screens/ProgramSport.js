@@ -4,6 +4,7 @@ import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { useState, useEffect } from 'react';
 import Dropdown from '../Component/Dropdown';
 import { AddProgramToDatabase } from '../Service/FirebaseService'
+import Constants from 'expo-constants';
 
 // Main sport page where you can create programs, select params for exercises and navigate to exercises details.
 
@@ -24,7 +25,7 @@ const ProgramSport = ({ navigation }) => {
 
     const url = "https://api.api-ninjas.com/v1/exercises?type=" + type + "&muscle=" + muscle + "&difficulty=" + difficulty;
 
-    const apiKey = ''; //Put your API Key here
+    const apiKey = Constants.expoConfig.extra.API_NINJA_KEY;
 
     // Function that take a json file (response from an api for example) and set it as the response state
 

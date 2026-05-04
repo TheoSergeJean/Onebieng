@@ -2,6 +2,7 @@ import { View, Text, Button, StyleSheet, ScrollView } from "react-native";
 import React, { useEffect, useState } from 'react';
 import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import Constants from 'expo-constants';
 
 // A page to display information about the food selected on the nutrition page
 
@@ -9,7 +10,7 @@ const Food = ({ route }) => {
     const { pdData } = route.params;
     const [response, setResponse] = useState();
 
-    const apiKey = ''; //Put your API Key here
+    const apiKey = Constants.expoConfig.extra.SPOONACULAR_KEY;
 
     // Contain the fetch function to call an api
     useEffect(() => {
