@@ -1,5 +1,4 @@
-import { View, Text, Button, StyleSheet, ActivityIndicator, TextInput, Image } from "react-native";
-import { NavigationProp } from "@react-navigation/native";
+import { View, Text, Button, StyleSheet, Image, Alert } from "react-native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { useState, useEffect } from 'react';
 
@@ -15,7 +14,7 @@ const Home = ({ navigation }) => {
 
     // Display the first part of an email adress as a username
     function handleUsername() {
-        email = FIREBASE_AUTH.currentUser.email;
+        const email = FIREBASE_AUTH.currentUser.email;
         setUsername(email.split('@')[0])
     }
 
@@ -33,7 +32,7 @@ const Home = ({ navigation }) => {
                 <View style={styles.separator} />
                 <Text style={styles.title}>Nutrition and health </Text>
                 <Text style={styles.button} onPress={() => navigation.navigate('Nutrition')} title="Nutrition">Nutrition </Text>
-                <Text style={styles.button} onPress={() => alert('Soon to be implemented')} title="Further informations ..." >Further informations...</Text>
+                <Text style={styles.button} onPress={() => Alert.alert('Soon to be implemented')} title="Further informations ..." >Further informations...</Text>
             </View>
         </View>
     );

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import { View, Text, StyleSheet } from 'react-native';
 
-//A dropdown menu used in the 
+//Component to create dropdown menus
 
 const Dropdown = ({ someList, handleState }) => {
     const [selectedValue, setSelectedValue] = useState(null);
@@ -11,10 +11,15 @@ const Dropdown = ({ someList, handleState }) => {
         value: null,
     };
 
+    const handleChange = (value) => {
+        setSelectedValue(value);
+        handleState(value);
+    };
 
     const options = someList.map(item => ({
         label: item,
         value: item,
+        key: item,
     }));
 
     return (
@@ -23,7 +28,7 @@ const Dropdown = ({ someList, handleState }) => {
             <RNPickerSelect
                 placeholder={placeholder}
                 items={options}
-                onValueChange={(value) => { setSelectedValue(value); handleState(value); }}
+                onValueChange={handleChange}
                 value={selectedValue}
 
             />

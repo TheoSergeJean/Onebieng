@@ -1,31 +1,25 @@
 import { View, Text, Button, StyleSheet, ScrollView } from "react-native";
 import React, { useEffect, useState } from 'react';
-import { NavigationProp } from "@react-navigation/native";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
 
 //Page where you can see a program with his name and exercises.
 
 const Program = ({ route, navigation }) => {
-    const [name, setName] = useState("");
-    const [exercises, setExercises] = useState([]);
+    
     const { programData } = route.params;
 
-    //The use effect separate the name form the exercises in the answer given by programData
-
-    useEffect(() => {
-        setName(programData[0].name);
-        setExercises(programData.slice(1, programData.length))
-    }, []);
-
-
+    //Separate the name from the exercises in the answer given by programData
+    const name = programData[0].name;
+    const exercises = programData.slice(1);
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text style={styles.title}>My program name : {name}</Text>
             <Text style={styles.title}>List of exercises:</Text>
             <ScrollView>{
-                exercises.map((ex, index) => <Text style={styles.button} key={index} title={ex.name} onPress={() => navigation.navigate('Exercise', { exData: ex })
-                } >{ex.name}</Text>)
+                exercises.map((ex, index) => (
+                    <Text style={styles.button} key={index} title={ex.name} onPress={() => navigation.navigate('Exercise', { exData: ex })
+                } >{ex.name}
+                </Text>))
             }
             </ScrollView>
         </View >

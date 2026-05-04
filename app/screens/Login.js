@@ -1,6 +1,6 @@
-import { Text, TextInput, View, StyleSheet, ActivityIndicator, Button, Image, KeyboardAvoidingView } from 'react-native';
+import { Text, TextInput, View, StyleSheet, ActivityIndicator, Button, Image, KeyboardAvoidingView, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { FIREBASE_APP, FIREBASE_AUTH } from '../../FirebaseConfig';
+import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -18,10 +18,9 @@ export default function Login() {
     const signIn = async () => {
         setLoading(true);
         try {
-            const response = await signInWithEmailAndPassword(auth, email, password);
+            await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
-            console.log(error);
-            alert('Sign in failed : ' + error.message);
+            Alert.alert('Sign in failed', error.message);
         } finally {
             setLoading(false);
         }
@@ -30,10 +29,9 @@ export default function Login() {
     const signUp = async () => {
         setLoading(true);
         try {
-            const response = await createUserWithEmailAndPassword(auth, email, password);
+            await createUserWithEmailAndPassword(auth, email, password);
         } catch (error) {
-            console.log(error);
-            alert('Sign in failed : ' + error.message);
+            Alert.alert('Sign in failed', error.message);
         } finally {
             setLoading(false);
         }
@@ -53,28 +51,19 @@ export default function Login() {
             </View >
             <View style={styles.container}>
 
-                {
-                    isUser && <Text style={styles.title}>Log In page</Text>
-                }
-                {
-                    !isUser && <Text style={styles.title}>Sign Up page</Text>
-                }
+                <Text style={styles.title}>{isUser ? 'Log In page' : 'Sign Up page'}</Text>
                 <TextInput value={email} style={styles.input} placeholder="Email" autoCapitalize="none" onChangeText={(text) => setEmail(text)}></TextInput>
                 <TextInput secureTextEntry={true} value={password} style={styles.input} placeholder="Password" autoCapitalize="none" onChangeText={(text) => setPassword(text)}></TextInput>
 
                 {loading ? <ActivityIndicator size="large" color="#0000ff" />
                     : <>
-                        {
-                            isUser && <Text style={styles.button} title="Login" onPress={signIn} >Login</Text>
+                        {isUser
+                        ? <Text style={styles.button} onPress={() => signIn()}>Login</Text>
+                        : <Text style={styles.button} onPress={() => signUp()}>Create account</Text>
                         }
-                        {
-                            !isUser && <Text style={styles.button} title="Create account" onPress={signUp} >Create account</Text>
-                        }
-                        {
-                            isUser && <Text style={styles.subText} onPress={() => { changeIsUserState() }}>Don't have an account yet ? click here ! </Text>
-                        }
-                        {
-                            !isUser && <Text style={styles.subText} onPress={() => { changeIsUserState() }} >Already have an account ? click here !</Text>
+                        {isUser
+                        ? <Text style={styles.subText} onPress={() => changeIsUserState()}>Don't have an account yet ? click here !</Text>
+                        : <Text style={styles.subText} onPress={() => changeIsUserState()}>Already have an account ? click here !</Text>
                         }
                     </>}
             </View>

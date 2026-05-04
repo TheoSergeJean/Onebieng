@@ -1,19 +1,28 @@
 import { View, Text, Button, StyleSheet } from "react-native";
-import React from 'react';
-import { NavigationProp } from "@react-navigation/native";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import React, { useEffect, useState } from 'react';
+
+
 
 //A page where an exercise's details are shown
 
 const Exercise = ({ route, navigation }) => {
+    const { exData, addMode } = route.params;
 
-    //Allow to send back data to the previous page through the route
-    function AddToProgram(exData) {
-        route.params.onGoBack(exData);
-        navigation.goBack();
-    }
-
-    const { exData } = route.params;
+    useEffect(() => {
+        if (addMode) {
+            navigation.setOptions({
+                headerRight: () => (
+                    <Button
+                        title="Add exercise"
+                        onPress={() => {
+                            navigation.navigate('New Program', { selectedExercise: exData });
+                        }}
+                        color="#000000"
+                    />
+                )
+            });
+        }
+    }, [navigation]);
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginLeft: 20, marginRight: 20 }}>
@@ -21,10 +30,8 @@ const Exercise = ({ route, navigation }) => {
             <Text>Type : {exData.type}</Text>
             <Text>Muscle : {exData.muscle}</Text>
             <Text>Details : {exData.instructions}</Text>
-            {route.params.onGoBack && <Text style={[styles.button, { backgroundColor: "red", marginTop: 20 }]} title='Add exercise' onPress={() => AddToProgram(exData)} >Add exercise</Text>}
         </View>
     );
-
 };
 
 export default Exercise;

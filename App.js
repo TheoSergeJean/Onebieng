@@ -19,18 +19,21 @@ const Stack = createNativeStackNavigator();
 
 const InsideStack = createNativeStackNavigator();
 
+const logoutButton = () => (
+  <Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />
+);
 
 
 function InsideLayout() {
   return (
     <InsideStack.Navigator>
-      <InsideStack.Screen name="Home" component={Home} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
-      <InsideStack.Screen name="Nutrition" component={Nutrition} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
-      <InsideStack.Screen name="New Program" component={ProgramSport} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
-      <InsideStack.Screen name="Exercise" component={Exercise} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
-      <InsideStack.Screen name="Food" component={Food} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
-      <InsideStack.Screen name="My Programs" component={MyPrograms} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
-      <InsideStack.Screen name="Program" component={Program} options={{ headerRight: () => (<Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color="#000000" />), }} />
+      <InsideStack.Screen name="Home" component={Home} options={{ headerRight: logoutButton }} />
+      <InsideStack.Screen name="Nutrition" component={Nutrition} options={{ headerRight: logoutButton }} />
+      <InsideStack.Screen name="New Program" component={ProgramSport} options={{ headerRight: logoutButton }} />
+      <InsideStack.Screen name="Exercise" component={Exercise} options={{ headerRight: logoutButton }} />
+      <InsideStack.Screen name="Food" component={Food} options={{ headerRight: logoutButton }} />
+      <InsideStack.Screen name="My Programs" component={MyPrograms} options={{ headerRight: logoutButton }} />
+      <InsideStack.Screen name="Program" component={Program} options={{ headerRight: logoutButton }} />
 
     </InsideStack.Navigator>
   )

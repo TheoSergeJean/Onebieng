@@ -1,17 +1,16 @@
-import { View, Text, Button, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import React, { useEffect, useState } from 'react';
-import { NavigationProp } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import { GetPrograms } from "../Service/FirebaseService";
+import { getPrograms } from "../Service/FirebaseService";
 
 //The page where a specific user's programs are displayed.
 
 const MyPrograms = ({ route, navigation }) => {
     const [programs, setPrograms] = useState([]);
-    //Fetch the prgrams according to the logged user id
+    //Fetch the programs according to the logged user id
     useEffect(() => {
-        userId = FIREBASE_AUTH.currentUser.uid
-        GetPrograms(userId).then((docsSnap) => {
+        const userId = FIREBASE_AUTH.currentUser.uid
+        getPrograms(userId).then((docsSnap) => {
             docsSnap.forEach(doc => {
                 setPrograms(oldArray => [...oldArray, doc.data().program]);
             })
@@ -24,12 +23,11 @@ const MyPrograms = ({ route, navigation }) => {
             <Text style={styles.title} >Here is the list of your programs :</Text>
             <ScrollView >
                 {
-                    programs.map((program, index) =>
-                        <React.Fragment key={index}>
-                            <Text style={styles.button} title={program[0].name} onPress={() => navigation.navigate('Program', {
-                                programData: program
-                            })}>{program[0].name} </Text>
-                        </React.Fragment>
+                    programs.map((program, index) =>                        
+                        <Text key={index} style={styles.button} title={program[0].name} onPress={() => navigation.navigate('Program', {
+                            programData: program
+                        })}>{program[0].name} </Text>
+                        
                     )
                 }
             </ScrollView>

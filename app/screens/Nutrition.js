@@ -1,8 +1,8 @@
-import { Text, ScrollView, TextInput, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import { Text, ScrollView, TextInput, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { useState, useEffect } from 'react';
-import { NavigationProp } from "@react-navigation/native";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import RNPickerSelect from 'react-native-picker-select';
+import IngredientList from '../Component/IngredientList';
+import { handleData } from '../Service/Utils';
 
 //The main page about nutrition, here you can calculate your caloric needs and search for ingredient/dishes
 
@@ -25,20 +25,8 @@ const Nutrition = ({ navigation }) => {
     const [sexTemp, setSexTemp] = useState("");
     const [activityLevelTemp, setActivityLevelTemp] = useState("");
 
-    const apiKey = ''; //Put your API Key here
+    const apiKey = process.env.EXPO_PUBLIC_SPOONACULAR_KEY; //Put your API Key here
 
-    //Push diffrent JSON parts into an array to be used as an array
-    function handleData(json) {
-        var result = [];
-
-
-        for (var i in json) {
-
-            result.push(json[i]);
-        }
-
-        setResponse(result);
-    }
     // Contain the fetch function to call an api
     useEffect(() => {
         fetch("https://api.spoonacular.com/food/ingredients/search?query=" + product + "&number=30&sort=calories&sortDirection=desc", {
@@ -54,7 +42,7 @@ const Nutrition = ({ navigation }) => {
             .then(
                 (result) => {
                     setIsLoading(false);
-                    handleData(result);
+                    setResponse(handleData(result));
                 },
                 (error) => {
                     setIsLoading(false);
@@ -65,20 +53,6 @@ const Nutrition = ({ navigation }) => {
     }, [product]);
 
 
-    //Allow to display a list of button leading to food details
-    function GetContent() {
-        if (isLoading) {
-            return <ActivityIndicator size="large" />;
-        }
-
-        if (error || response == undefined) {
-            return <Text>{error}</Text>;
-        }
-
-
-        return response[0].map((pd, index) => <Text style={styles.button} key={index} title={pd.name} onPress={() => navigation.navigate('Food', { pdData: pd })}>{pd.name}</Text>);
-
-    };
     //The daily Caloric needs calculator
     function dailyCaloricNeeds(age, height, weight, gender, activityLevel) {
         let caloricNeeds = 0;
@@ -145,10 +119,10 @@ const Nutrition = ({ navigation }) => {
             <View style={styles.drop}>
                 <Text>Select a sex:</Text>
                 <RNPickerSelect
-                    placeholder={"Sex"}
+                    placeholder={{ label: 'Select a sex...', value: null }}
                     items={[
-                        { label: 'Male', value: 'male' },
-                        { label: 'Female', value: 'female' }
+                        { label: 'Male', value: 'male', key: 'male' },
+                        { label: 'Female', value: 'female', key: 'female' }
                     ]}
                     onValueChange={(value) => setSexTemp(value)}
 
@@ -159,13 +133,13 @@ const Nutrition = ({ navigation }) => {
             <View style={styles.drop}>
                 <Text>Select an activity level:</Text>
                 <RNPickerSelect
-                    placeholder={"Activity level"}
+                    placeholder={{ label: 'Select an activity level...', value: null }}
                     items={[
-                        { label: 'Sedentary', value: 'sedentary' },
-                        { label: 'Lightly Active', value: 'lightly active' },
-                        { label: 'Moderately Active', value: 'moderately active' },
-                        { label: 'Very Active', value: 'very active' },
-                        { label: 'Extra Active', value: 'extra active' }
+                        { label: 'Sedentary', value: 'sedentary', key: 'sedentary' },
+                        { label: 'Lightly Active', value: 'lightly active', key: 'lightly active' },
+                        { label: 'Moderately Active', value: 'moderately active', key: 'moderately active' },
+                        { label: 'Very Active', value: 'very active', key: 'very active' },
+                        { label: 'Extra Active', value: 'extra active', key: 'extra active' }
                     ]}
                     onValueChange={(value) => setActivityLevelTemp(value)}
 
@@ -194,7 +168,13 @@ const Nutrition = ({ navigation }) => {
             }} >Search</Text>
             <View><Text style={{ marginBottom: 20, marginTop: 20 }}>Matching ingredients :</Text></View>
 
-            <GetContent />
+        <IngredientList
+        isLoading={isLoading}
+        error={error}
+        response={response}
+        onPress={(pd) => navigation.navigate('Food', { pdData: pd })}
+        styles={styles}
+        />    
 
         </View>
     </ScrollView >
@@ -236,14 +216,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontWeight: 'bold',
         fontSize: 14,
-        fontWeight: 'bold',
         marginLeft: 45
     },
     title: {
         alignSelf: 'center',
         marginBottom: 15,
         marginTop: 10,
-        fontWeight: 'bold',
         fontSize: 20,
         fontWeight: 'bold',
     },
@@ -258,7 +236,7 @@ const styles = StyleSheet.create({
     input:
     {
         height: 40,
-        width: '50 %',
+        width: '50%',
         borderColor: 'gray',
         borderWidth: 1,
         alignSelf: 'center',

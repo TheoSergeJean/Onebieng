@@ -1,16 +1,16 @@
-import { View, Text, Button, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from 'react';
-import { NavigationProp } from "@react-navigation/native";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import Constants from 'expo-constants';
+
 
 // A page to display information about the food selected on the nutrition page
 
 const Food = ({ route }) => {
     const { pdData } = route.params;
     const [response, setResponse] = useState();
+    const [error, setError] = useState();
+    const [isLoading, setIsLoading] = useState(true);
 
-    const apiKey = Constants.expoConfig.extra.SPOONACULAR_KEY;
+    const apiKey = process.env.EXPO_PUBLIC_SPOONACULAR_KEY; //Put your API Key here
 
     // Contain the fetch function to call an api
     useEffect(() => {
@@ -25,11 +25,15 @@ const Food = ({ route }) => {
             .then(res => res.json())
 
             .then(
-                (result) => {
-
-                    setResponse(result);
-                }
-            )
+            (result) => {
+                setIsLoading(false);
+                setResponse(result);
+            },
+            (error) => {
+                setIsLoading(false);
+                setError(error);
+            }
+        )
     }, [])
 
     return (
@@ -37,7 +41,9 @@ const Food = ({ route }) => {
         <ScrollView contentContainerStyle={{
             flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20, marginBottom: 20
 
-        }}>
+        }}> 
+            {isLoading && <ActivityIndicator size="large" />}
+            
             {response && response.name && response.nutrition && response.nutrition.nutrients && (
                 <View>
                     <Text style={styles.title}>Name : {response.name}</Text>

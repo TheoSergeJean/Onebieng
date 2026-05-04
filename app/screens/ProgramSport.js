@@ -1,14 +1,14 @@
-import { Text, ScrollView, TextInput, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
-import { NavigationProp } from "@react-navigation/native";
+import { Text, ScrollView, TextInput, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { useState, useEffect } from 'react';
 import Dropdown from '../Component/Dropdown';
-import { AddProgramToDatabase } from '../Service/FirebaseService'
-import Constants from 'expo-constants';
+import ExerciseList from '../Component/ExerciseList';
+import { addProgramToDatabase } from '../Service/FirebaseService'
+import { handleData } from '../Service/Utils';
 
 // Main sport page where you can create programs, select params for exercises and navigate to exercises details.
 
-const ProgramSport = ({ navigation }) => {
+const ProgramSport = ({ navigation, route }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState();
     const [response, setResponse] = useState();
@@ -25,7 +25,7 @@ const ProgramSport = ({ navigation }) => {
 
     const url = "https://api.api-ninjas.com/v1/exercises?type=" + type + "&muscle=" + muscle + "&difficulty=" + difficulty;
 
-    const apiKey = Constants.expoConfig.extra.API_NINJA_KEY;
+    const apiKey = process.env.EXPO_PUBLIC_API_NINJA_KEY; //Put your API Key here
 
     // Function that take a json file (response from an api for example) and set it as the response state
 
@@ -46,86 +46,60 @@ const ProgramSport = ({ navigation }) => {
         }
     }
 
-    //Push diffrent JSON parts into an array to be used as an array
-    function handleData(json) {
-        var result = [];
-
-
-        for (var i in json) {
-
-            result.push(json[i]);
-        }
-
-        setResponse(result);
-
-    }
 
     // Contain the fetch function to call an api
     useEffect(() => {
-        fetch(url, {
-
-            //An API key is required
-            headers: {
-                'X-API-Key': apiKey
-            }
-
-        })
-            .then(res => res.json())
-
-            .then(
-                (result) => {
-                    setIsLoading(false);
-                    handleData(result);
-                },
-                (error) => {
-                    setIsLoading(false);
-                    setError(error);
-                }
-            )
-
-    }, [type, muscle, difficulty, exercises]);
-
-
-    //Allow to display a list of button leading to exercises details
-    function GetContent() {
-        if (isLoading) {
-            return <ActivityIndicator size="large" />;
+    
+    fetch(url, {
+        headers: {
+            'X-API-Key': apiKey
         }
-
-        if (error || response == undefined) {
-            return <Text>{error}</Text>;
+    })
+    .then(res => res.json())
+    .then(
+        (result) => {
+            setIsLoading(false);
+            setResponse(handleData(result));
+        },
+        (error) => {
+            setIsLoading(false);
+            setError(error);
         }
+    )
+}, [type, muscle, difficulty]);
 
-        return response.map((ex, index) => <Text style={styles.button} key={index} title={ex.name} onPress={() => CheckExercise(ex)}>{ex.name}</Text >);
-    };
+    useEffect(() => {
+    if (route?.params?.selectedExercise) {
+        addNewExercise(route.params.selectedExercise);
+    }
+}, [route?.params?.selectedExercise]);
+
+  
 
 
     // Allow to navigate to an exercise page, and wait for information from the targeted page
-    function CheckExercise(exo) {
-        navigation.navigate('Exercise', {
-            exData: exo,
-            onGoBack: (data) => {
-                AddNewExercise(data)
-            }
-        })
-    }
+    function checkExercise(exo) {
+    navigation.navigate('Exercise', {
+        exData: exo,
+        addMode: true // simple booléen pour signaler qu'on est en mode ajout
+    })
+}
 
     //Set the name of the new program
     function handleNameProgram(inputText) {
         setNameProgram(inputText);
     }
     //Add an exercise to the future program
-    function AddNewExercise(data) {
+    function addNewExercise(data) {
         setExercises(oldArray => [...oldArray, data]);
     }
 
     //Give all the information to the AddProgram to send the program to the database
-    function SaveProgram() {
+    function saveProgram() {
         if (nameProgram != "") {
-            nameObj = new Object();
-            nameObj.name = nameProgram
+            const nameObj = {name: nameProgram};
             exercises.unshift(nameObj)
-            if (AddProgramToDatabase(exercises, FIREBASE_AUTH.currentUser.uid)) {
+            if (addProgramToDatabase(exercises, FIREBASE_AUTH.currentUser.uid)) {
                 setExercises([])
             }
             navigation.navigate('My Programs')
@@ -146,7 +120,13 @@ const ProgramSport = ({ navigation }) => {
                     <Text style={styles.subTitle}>Sport level:</Text>
                     <Dropdown someList={difficultyList} handleState={(value) => handleState('difficulty', value)} />
                     <Text style={styles.subTitle}>List of exercises :</Text>
-                    <GetContent />
+                    <ExerciseList
+                    isLoading={isLoading}
+                    error={error}
+                    response={response}
+                    onPress={checkExercise}
+                    styles={styles}
+                    />
                 </ScrollView>
                 <View style={styles.separator} />
                 <View contentContainerStyle={{ height: '100%' }}>
@@ -160,13 +140,13 @@ const ProgramSport = ({ navigation }) => {
                     />
                     <Text style={styles.subTitle}>Selected exercises :</Text>
                     {
-                        exercises?.map((exercise) => (
-                            <Text style={{ alignSelf: 'center' }}>{exercise?.name}</Text>
+                        exercises?.map((exercise, index) => (
+                            <Text key={index} style={{ alignSelf: 'center' }}>{exercise?.name}</Text>
                         ))
                     }
 
 
-                    <Text style={[styles.button, { backgroundColor: "red", marginTop: 20, marginBottom: 40 }]} title='Save program' onPress={() => SaveProgram()} >Save program</Text>
+                    <Text style={[styles.button, { backgroundColor: "red", marginTop: 20, marginBottom: 40 }]} title='Save program' onPress={() => saveProgram()} >Save program</Text>
                 </View>
 
             </ScrollView>
@@ -183,12 +163,6 @@ const ProgramSport = ({ navigation }) => {
 export default ProgramSport;
 
 const styles = StyleSheet.create({
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-    },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -226,7 +200,7 @@ const styles = StyleSheet.create({
     input:
     {
         height: 40,
-        width: '50 %',
+        width: '50%',
         borderColor: 'gray',
         borderWidth: 1,
         alignSelf: 'center',
