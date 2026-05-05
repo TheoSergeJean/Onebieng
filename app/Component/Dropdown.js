@@ -1,54 +1,53 @@
-import React, { useState } from 'react';
-import RNPickerSelect from 'react-native-picker-select';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import RNPickerSelect from "react-native-picker-select";
+import { View, Text, StyleSheet } from "react-native";
 
 //Component to create dropdown menus
 
 const Dropdown = ({ someList, handleState }) => {
-    const [selectedValue, setSelectedValue] = useState(null);
-    const placeholder = {
-        label: 'Select an option...',
-        value: null,
-    };
+  const [selectedValue, setSelectedValue] = useState(null);
+  const placeholder = {
+    label: "Select an option...",
+    value: null,
+  };
 
-    const handleChange = (value) => {
-        setSelectedValue(value);
-        handleState(value);
-    };
+  const handleChange = (value) => {
+    setSelectedValue(value);
+    handleState(value);
+  };
 
-    const options = someList.map(item => ({
-        label: item,
-        value: item,
-        key: item,
-    }));
+  const options = someList.map((item) => ({
+    label: item,
+    value: item,
+    key: item,
+  }));
 
-    return (
-        <View style={styles.drop}>
-            <Text>Select an option:</Text>
-            <RNPickerSelect
-                placeholder={placeholder}
-                items={options}
-                onValueChange={handleChange}
-                value={selectedValue}
-
-            />
-            {selectedValue && <Text>Selected: {selectedValue}</Text>}
-        </View>
-    );
+  return (
+    <View style={styles.drop}>
+      <Text>Select an option:</Text>
+      <RNPickerSelect
+        placeholder={placeholder}
+        items={options}
+        onValueChange={handleChange}
+        value={selectedValue}
+      />
+      {selectedValue && <Text>Selected: {selectedValue}</Text>}
+    </View>
+  );
 };
 export default Dropdown;
 
 const styles = StyleSheet.create({
-    drop: {
-        fontSize: 16,
-        paddingHorizontal: 8,
-        paddingVertical: 5,
-        borderWidth: 0.5,
-        borderColor: 'gray',
-        borderRadius: 8,
-        color: 'black',
-        width: '80%',
-        marginBottom: 10,
-        alignSelf: 'center'
-    },
+  drop: {
+    fontSize: 16,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    borderWidth: 0.5,
+    borderColor: "gray",
+    borderRadius: 8,
+    color: "black",
+    width: "80%",
+    marginBottom: 10,
+    alignSelf: "center",
+  },
 });
