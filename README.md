@@ -1,49 +1,96 @@
-# Onebieng
+# OnéBieng 
 
-Bienvenue sur le projet Onébieng !
+Application mobile de sport et nutrition développée avec React Native et Expo.
 
-Afin de pouvoir utiliser l'application, téléchargez vscode : https://code.visualstudio.com/Download
+---
 
-Une fois installé, créez un dossier, démarrez vscode et sélectionnez ce dossier depuis l'onglet file en appuyant sur Open folder.
+## Aperçu
 
-Copiez le lien du projet sur github ( ou ici : https://github.com/TheoSergeJean/Onebieng.git ) et ouvrez un terminal sur vscode en cliquant sur Terminal puis New terminal.
+| Login | Accueil | Nutrition |
+|-------|---------|-----------|
+| ![Login](assets/screenshots/Login.jpg) | ![Home](assets/screenshots/Home.jpg) | ![Nutrition](assets/screenshots/Food1.jpg) |
 
-Entrer la commande:  git clone https://github.com/TheoSergeJean/Onebieng.git
+| Recherche d'aliments | Détail d'un ingrédient | Recherche d'exercices |
+|----------------------|------------------------|----------------------|
+| ![Food2](assets/screenshots/Food2.jpg) | ![Ingredient](assets/screenshots/Ingredient.jpg) | ![NewProg1](assets/screenshots/NewProg1.jpg) |
 
-Sélectionnez le dossier Onebieng dans vos dossier ou entrez la commande : cd Onebieng
+| Création de programme | Mes programmes | Détail d'un programme | Détail d'un exercice |
+|-----------------------|----------------|----------------------|----------------------|
+| ![NewProg2](assets/screenshots/NewProg2.jpg) | ![MyProg](assets/screenshots/MyProg.jpg) | ![Prog](assets/screenshots/Prog.jpg) | ![Exercise](assets/screenshots/Exercise.jpg) |
 
-Entrez la commande: npm install 
+---
 
-Entrez la commande npm install --global yarn
+## Fonctionnalités
 
-L'application fonctionne avec des API (application programming interface) utilisant des clés spécifiques pour les utilisateurs, vous devrez créer des comptes chez les hébergeurs de ces API afin de pouvoir bénéficier de leur clé API et ainsi l'ajouter dans le programme.
+- Authentification par email / mot de passe via Firebase
+- Création de programmes sportifs personnalisés
+- Recherche d'exercices filtrés par type, muscle ciblé et niveau de difficulté
+- Consultation et suppression de ses programmes
+- Calcul des besoins caloriques journaliers (formule de Harris-Benedict)
+- Recherche d'aliments et consultation de leurs valeurs nutritionnelles
 
-API NINJA:
-Rendez-vous sur le site : https://api-ninjas.com/ et créez un compte.
-Connectez vous et vous devriez pouvoir accéder à une clé api en cliquant sur le bouton "Show API key"
-Copiez cette clé et collez la entre guillemets '' à la ligne 27 du fichier ProgramSport.js (chemin : app/screens/ProgramSport.js)
-Sauvegardez avec ctrl+S
+---
 
-SPOONACULAR:
-Rendez vous sur le site : https://spoonacular.com/food-api et créez un compte.
-Connectez vous et vous devriez pouvoir accéder à une clé api en cliquant sur le bouton "Show/Hide API key" dans l'onglet Profile.
-Copiez cette clé et collez la entre guillemets '' à la ligne 28 du fichier Nutrition.js (chemin : app/screens/Nutrition.js)
-Sauvegardez avec ctrl+S
-Copiez cette clé et collez la entre guillemets '' à la ligne 12 du fichier Food.js (chemin : app/screens/Food.js)
-Sauvegardez avec ctrl+S
+## Technologies utilisées
 
+- [React Native](https://reactnative.dev/) — framework mobile
+- [Expo](https://expo.dev/) — environnement de développement
+- [Firebase](https://firebase.google.com/) — authentification et base de données (Firestore)
+- [API Ninjas](https://api-ninjas.com/) — données sur les exercices sportifs
+- [Spoonacular](https://spoonacular.com/food-api) — données nutritionnelles
 
+---
 
-Entrez dans le terminal la commande : yarn expo start --tunnel     Regardez dans votre terminal, un QR code devrait apparaître dans les informations les plus récentes.
-Si un message d'erreur apparaît, votre ordinateur bloque peut être l'exécution du script, pour un ordinateur muni de windows, ouvrez windows powershell en tant qu'administrateur et exécutez la fonction : Set-ExecutionPolicy Unrestricted -Scope CurrentUser pour plus d'informations consultez la doculentation : https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4
-Une fois la commande exécutez, retournez sur vscode et retentez la commande précédente.
+## Installation
 
-Un message devrait vous proposer de télécharger ngrok, si c'est le cas acceptez-le.
+### Prérequis
 
-Sur votre téléphone téléchargez l'application expo go.
+- [Node.js](https://nodejs.org/)
+- [Expo Go](https://expo.dev/client) sur votre téléphone
+- Un compte [API Ninjas](https://api-ninjas.com/) et [Spoonacular](https://spoonacular.com/food-api) pour obtenir vos clés API
 
-Une fois téléchargée, ouvrez l'application expo go.
+### Étapes
 
-Sélectionnez le lecteur de QR code et scannez le code présent dans votre terminal vscode.
+1. Cloner le projet
 
-Patientez quelques secondes et l'application Onébieng devrait s'afficher prête à être utilisée.
+```bash
+git clone https://github.com/TheoSergeJean/Onebieng.git
+cd Onebieng
+```
+
+2. Installer les dépendances
+
+```bash
+npm install
+```
+
+3. Configurer les variables d'environnement
+
+Créez un fichier `.env` à la racine du projet en vous basant sur `.env.example` :
+
+```env
+EXPO_PUBLIC_API_NINJA_KEY=votre_clé_api_ninjas
+EXPO_PUBLIC_SPOONACULAR_KEY=votre_clé_spoonacular
+```
+
+4. Lancer l'application
+
+```bash
+npx expo start --lan
+```
+
+Scannez le QR code avec Expo Go (Android) ou l'appareil photo (iOS). Assurez-vous que votre téléphone et votre ordinateur sont sur le même réseau WiFi.
+
+---
+
+## Améliorations potentielles
+
+- Modification d'un programme existant
+- Suivi de l'historique des séances
+- Graphiques de progression nutritionnelle
+
+---
+
+## Auteur
+
+**Théo Biron** — projet réalisé en 2ème année d'école d'ingénieur avec modifications ultérieures
