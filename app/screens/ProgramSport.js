@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import Dropdown from "../Component/Dropdown";
 import ExerciseList from "../Component/ExerciseList";
 import { addProgramToDatabase } from "../Service/FirebaseService";
-import { handleData } from "../Service/Utils";
+import { handleData, sanitizeInput } from "../Service/Utils";
 
 // Main sport page where you can create programs, select params for exercises and navigate to exercises details.
 
@@ -119,7 +119,7 @@ const ProgramSport = ({ navigation, route }) => {
 
   //Set the name of the new program
   function handleNameProgram(inputText) {
-    setNameProgram(inputText);
+    setNameProgram(sanitizeInput(inputText));
   }
   //Add an exercise to the future program
   function addNewExercise(data) {

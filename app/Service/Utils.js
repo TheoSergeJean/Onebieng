@@ -6,3 +6,14 @@ export function handleData(json) {
   }
   return result;
 }
+// Sanitize a text input to prevent code injection
+export function sanitizeInput(text) {
+    return text
+        .replace(/</g, '')   
+        .replace(/>/g, '')   
+        .replace(/&/g, '')   
+        .replace(/"/g, '')   
+        .replace(/'/g, '')   
+        .replace(/\//g, '')  
+        .trim();             
+}

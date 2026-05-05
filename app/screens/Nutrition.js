@@ -9,7 +9,7 @@ import {
 import { useState, useEffect } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import IngredientList from "../Component/IngredientList";
-import { handleData } from "../Service/Utils";
+import { handleData, sanitizeInput } from "../Service/Utils";
 
 //The main page about nutrition, here you can calculate your caloric needs and search for ingredient/dishes
 
@@ -194,7 +194,7 @@ const Nutrition = ({ navigation }) => {
           style={styles.input}
           placeholder="Name of your product"
           onChangeText={(text) => {
-            setIntermediate(text);
+            setIntermediate(sanitizeInput(text));
           }}
         />
         <Text
