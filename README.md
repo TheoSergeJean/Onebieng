@@ -33,11 +33,11 @@ Application mobile de sport et nutrition développée avec React Native et Expo.
 
 ## Technologies utilisées
 
-- [React Native](https://reactnative.dev/) — framework mobile
-- [Expo](https://expo.dev/) — environnement de développement
-- [Firebase](https://firebase.google.com/) — authentification et base de données (Firestore)
-- [API Ninjas](https://api-ninjas.com/) — données sur les exercices sportifs
-- [Spoonacular](https://spoonacular.com/food-api) — données nutritionnelles
+- [React Native](https://reactnative.dev/) - framework mobile
+- [Expo](https://expo.dev/) - environnement de développement
+- [Firebase](https://firebase.google.com/) - authentification et base de données (Firestore)
+- [API Ninjas](https://api-ninjas.com/) - données sur les exercices sportifs
+- [Spoonacular](https://spoonacular.com/food-api) - données nutritionnelles
 
 ---
 
@@ -126,4 +126,4 @@ Scannez le QR code avec Expo Go (Android) ou l'appareil photo (iOS). Assurez-vou
 
 ## Auteur
 
-**Théo Serge Jean** — projet réalisé en 2ème année d'école d'ingénieur avec modifications ultérieures
+**Théo Serge Jean** - projet réalisé en 2ème année d'école d'ingénieur avec modifications ultérieures
